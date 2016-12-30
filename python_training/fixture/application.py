@@ -7,7 +7,7 @@ from fixture.contact import ContactHelper
 class Application:
     def __init__(self):
         self.wd = WebDriver()
-        self.wd.implicitly_wait(8)
+        #self.wd.implicitly_wait(8)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
@@ -39,7 +39,9 @@ class Application:
 
     def go_to_home_page(self):
         wd = self.wd
-        wd.find_element_by_link_text("home").click()
+        address = wd.current_url
+        if not (address.endswith("addressbook/") or address.endswith("/index.php")):
+            wd.find_element_by_link_text("home").click()
 
 
 
