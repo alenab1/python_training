@@ -2,6 +2,7 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
+from sys import maxsize
 
 
 class Application:
@@ -43,6 +44,10 @@ class Application:
         if not (address.endswith("addressbook/") or address.endswith("/index.php")):
             wd.find_element_by_link_text("home").click()
 
-
+    def id_or_max(self, gr):
+        if gr.id:
+            return int(gr.id)
+        else:
+            return maxsize
 
 
