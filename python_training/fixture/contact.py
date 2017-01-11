@@ -59,25 +59,10 @@ class ContactHelper:
         self.app.change_field_value("notes", contact.notes)
 
     def delete_first_contact(self):
-        wd = self.app.wd
-        self.app.go_to_home_page()
-        self.app.click_first_entry_in_list()
-        # init contact deletion
-        wd.find_element_by_xpath("//input[@type='button' and @value='Delete']").click()
-        #submit deletion alert
-        wd.switch_to_alert().accept()
-        self.contact_cache = None
+        self.delete_contact_by_index(1)
 
     def edit_first(self, contact):
-        wd = self.app.wd
-        self.app.go_to_home_page()
-        # init contact editing
-        wd.find_element_by_xpath("//tr[@name='entry'][1]//img[@title='Edit']/..").click()
-        # fill contact form with new values
-        self.fill_contact_form(contact)
-        #submit editing
-        wd.find_element_by_xpath("//input[@type='submit' and @value='Update']").click()
-        self.contact_cache = None
+        self.edit_contact_by_index(self, 1, contact)
 
     def count(self):
         wd = self.app.wd
@@ -97,3 +82,28 @@ class ContactHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 contact_cache.append(Contact(first_name=f_name, last_name=l_name, id=id))
         return list(contact_cache)
+
+    def open_contact_for_edit_by_index(self, index):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//tr[@name='entry'][" + str(index+1) + "]//img[@title='Edit']/..").click()
+
+    def delete_contact_by_index(self, index):
+        wd = self.app.wd
+        self.app.click_checkbox_by_index(index)
+        # submit deletion
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        # submit deletion alert
+        wd.switch_to_alert().accept()
+        self.contact_cache = None
+
+    def edit_contact_by_index(self, index, contact):
+        wd = self.app.wd
+        self.app.go_to_home_page()
+        # init contact editing
+        self.open_contact_for_edit_by_index(index)
+        # fill contact form with new values
+        self.fill_contact_form(contact)
+        # submit editing
+        wd.find_element_by_xpath("//input[@type='submit' and @value='Update']").click()
+        self.contact_cache = None
+

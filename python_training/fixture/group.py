@@ -31,24 +31,37 @@ class GroupHelper:
         self.app.change_field_value("group_header", group.header)
         self.app.change_field_value("group_footer", group.footer)
 
-    def delete_first(self):
+    def click_checkbox_by_index(self, index):
         wd = self.app.wd
-        self.open_groups_page()
-        self.app.click_first_entry_in_list()
-        #submit deletion
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def delete_group_by_index(self, index):
+        wd = self.app.wd
+        self.select_group_by_index(index)
+        # submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
         self.group_cache = None
 
-    def edit_first(self, new_group):
+    def delete_first(self):
+        self.delete_group_by_index(self, 1)
+
+    def select_group_by_index(self, index):
+        wd = self.app.wd
+        self.click_checkbox_by_index(index)
+
+    def edit_group_by_index(self, index, new_group):
         wd = self.app.wd
         self.open_groups_page()
-        self.app.click_first_entry_in_list()
+        self.click_checkbox_by_index(index)
         self.open_modification_form()
         self.fill_group_form(new_group)
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
         self.group_cache = None
+
+    def edit_first(self, new_group):
+        wd = self.app.wd
 
     def open_modification_form(self):
         wd = self.app.wd

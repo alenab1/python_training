@@ -38,6 +38,10 @@ class Application:
         wd = self.wd
         wd.find_element_by_name("selected[]").click()
 
+    def click_checkbox_by_index(self, index):
+        wd=self.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
     def go_to_home_page(self):
         wd = self.wd
         address = wd.current_url
