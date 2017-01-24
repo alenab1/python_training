@@ -33,8 +33,16 @@ class Contact:
         self.all_emails = all_emails
 
     def __repr__(self):
-        return "%s:%s:%s" % (self.id, self.first_name, self.last_name)
+        return "%s;%s:%s:%s:%s:%s" % (self.id, self.first_name, self.last_name, self.address,
+                             # self.home_tel, self.mobile_tel, self.work_tel,
+                                                           # self.email, self.email2, self.email3,
+                              # self.phone2,
+                                                           self.all_phones_from_home_page, self.all_emails)
 
     def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and self.first_name == other.first_name and self.last_name==other.last_name
+        return (self.id is None or other.id is None or self.id == other.id) and self.first_name == other.first_name\
+               and self.last_name==other.last_name and self.address == other.address\
+            and self.all_phones_from_home_page == other.all_phones_from_home_page\
+            and self.all_emails == other.all_emails
+
 

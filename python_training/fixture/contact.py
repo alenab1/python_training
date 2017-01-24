@@ -159,4 +159,23 @@ class ContactHelper:
                        work_tel=work_tel,
                        phone2=phone2)
 
+    def clear(self, s):
+        return re.sub("[() -]", "", s)
 
+    def merge_phones(self, contact):
+        return "\n".join(filter(lambda x: x != "",
+                        map(lambda x: self.clear(x),
+                                filter(lambda x: x is not None,
+                                        [contact.home_tel, contact.mobile_tel,
+                                            contact.work_tel, contact.phone2]))))
+
+    def merge_emails(self, contact):
+        contact.email = contact.email.strip()
+        contact.email2 = contact.email2.strip()
+        contact.email3 = contact.email3.strip()
+        whole_email = "\n".join(filter(lambda x: x != "",
+                            filter(lambda x: x is not None,
+                                    [contact.email, contact.email2,
+                                        contact.email3])))
+        whole_email = re.sub(" +", " ", whole_email)
+        return whole_email
