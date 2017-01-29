@@ -41,7 +41,7 @@ class Contact:
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) and self.first_name == other.first_name\
-               and self.last_name==other.last_name and self.address == other.address\
+               and self.last_name == other.last_name and self.address == other.address\
             and self.all_phones_from_home_page == other.all_phones_from_home_page\
             and self.all_emails == other.all_emails
 
