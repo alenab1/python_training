@@ -2,7 +2,7 @@ import string
 import random
 import os
 from model.contact import Contact
-import json
+import jsonpickle
 import getopt
 import sys
 
@@ -41,4 +41,5 @@ testdata = [Contact(first_name="", last_name="",
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 
 with open(file, "w") as outfile:
-    outfile.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
+    jsonpickle.set_encoder_options("json", indent=2)
+    outfile.write(jsonpickle.encode(testdata))
